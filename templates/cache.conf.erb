@@ -1,0 +1,138 @@
+[cache:<%= @name %>]
+defined was: <%= @defined_was %>
+LINE_RECEIVER_PORT = <%= @line_receiver_port %>
+UDP_RECEIVER_PORT = <%= @udp_receiver_port %>
+PICKLE_RECEIVER_PORT = <%= @pickle_receiver_port %>
+CACHE_QUERY_PORT = <%= @cache_query_port %>
+<%- if @conf_dir -%>
+CONF_DIR = <%= @conf_dir %>
+<%- end -%>
+<%- if @storage_dir -%>
+STORAGE_DIR = <%= @storage_dir %>
+<%- end -%>
+<%- if @log_dir -%>
+LOG_DIR = <%= @log_dir %>
+<%- end -%>
+<%- if @pid_dir -%>
+PID_DIR = <%= @pid_dir %>
+<%- end -%>
+<%- if @local_data_dir -%>
+LOCAL_DATA_DIR = <%= @local_data_dir %>
+<%- end -%>
+<%- if @user -%>
+USER = <%= @user %>
+<%- end -%>
+<%- if !@enable_logrotation.nil? -%>
+ENABLE_LOGROTATION = <%= @enable_logrotation_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @max_updates_per_second -%>
+MAX_UPDATES_PER_SECOND = <%= @max_updates_per_second %>
+<%- end -%>
+<%- if @max_updates_per_second_on_shutdown -%>
+MAX_UPDATES_PER_SECOND_ON_SHUTDOWN = <%= @max_updates_per_second_on_shutdown %>
+<%- end -%>
+<%- if @max_creates_per_minute -%>
+MAX_CREATES_PER_MINUTE = <%= @max_creates_per_minute %>
+<%- end -%>
+<%- if @line_receiver_interface -%>
+LINE_RECEIVER_INTERFACE = <%= @line_receiver_interface %>
+<%- end -%>
+<%- if !@enable_udp_listener.nil? -%>
+ENABLE_UDP_LISTENER = <%= @enable_udp_listener_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @udp_receiver_interface -%>
+UDP_RECEIVER_INTERFACE = <%= @udp_receiver_interface %>
+<%- end -%>
+<%- if @pickle_receiver_interface -%>
+PICKLE_RECEIVER_INTERFACE = <%= @pickle_receiver_interface %>
+<%- end -%>
+<%- if !@log_listener_connections.nil? -%>
+LOG_LISTENER_CONNECTIONS = <%= @log_listener_connections_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@use_insecure_unpickler.nil? -%>
+USE_INSECURE_UNPICKLER = <%= @use_insecure_unpickler_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @cache_query_interface -%>
+CACHE_QUERY_INTERFACE = <%= @cache_query_interface %>
+<%- end -%>
+<%- if !@use_flow_control.nil? -%>
+USE_FLOW_CONTROL = <%= @use_flow_control_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@log_updates.nil? -%>
+LOG_UPDATES = <%= @log_updates_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@log_cache_hits.nil? -%>
+LOG_CACHE_HITS = <%= @log_cache_hits_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@log_cache_queue_sorts.nil? -%>
+LOG_CACHE_QUEUE_SORTS = <%= @log_cache_queue_sorts_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @cache_write_strategy -%>
+CACHE_WRITE_STRATEGY = <%= @cache_write_strategy %>
+<%- end -%>
+<%- if !@whisper_autoflush.nil? -%>
+WHISPER_AUTOFLUSH = <%= @whisper_autoflush_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@whisper_sparse_create.nil? -%>
+WHISPER_SPARSE_CREATE = <%= @whisper_sparse_create_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@whisper_fallocate_create.nil? -%>
+WHISPER_FALLOCATE_CREATE = <%= @whisper_fallocate_create_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@whisper_lock_writes.nil? -%>
+WHISPER_LOCK_WRITES = <%= @whisper_lock_writes_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@use_whitelist.nil? -%>
+USE_WHITELIST = <%= @use_whitelist_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @carbon_metric_prefix -%>
+CARBON_METRIC_PREFIX = <%= @carbon_metric_prefix %>
+<%- end -%>
+<%- if @carbon_metric_interval -%>
+CARBON_METRIC_INTERVAL = <%= @carbon_metric_interval %>
+<%- end -%>
+<%- if !@enable_amqp.nil? -%>
+ENABLE_AMQP = <%= @enable_amqp_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@amqp_verbose.nil? -%>
+AMQP_VERBOSE = <%= @amqp_verbose_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @amqp_host -%>
+AMQP_HOST = <%= @amqp_host %>
+<%- end -%>
+<%- if @amqp_port -%>
+AMQP_PORT = <%= @amqp_port %>
+<%- end -%>
+<%- if @amqp_vhost -%>
+AMQP_VHOST = <%= @amqp_vhost %>
+<%- end -%>
+<%- if @amqp_user -%>
+AMQP_USER = <%= @amqp_user %>
+<%- end -%>
+<%- if @amqp_password -%>
+AMQP_PASSWORD = <%= @amqp_password %>
+<%- end -%>
+<%- if @amqp_exchange -%>
+AMQP_EXCHANGE = <%= @amqp_exchange %>
+<%- end -%>
+<%- if !@amqp_metric_name_in_body.nil? -%>
+AMQP_METRIC_NAME_IN_BODY = <%= @amqp_metric_name_in_body_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if !@bind_patterns.nil? -%>
+BIND_PATTERNS = <%= Array(@bind_patterns).join(', ') %>
+<%- end -%>
+<%- if !@enable_manhole.nil? -%>
+ENABLE_MANHOLE = <%= @enable_manhole_bool ? 'True' : 'False' %>
+<%- end -%>
+<%- if @manhole_interface -%>
+MANHOLE_INTERFACE = <%= @manhole_interface %>
+<%- end -%>
+<%- if @manhole_port -%>
+MANHOLE_PORT = <%= @manhole_port %>
+<%- end -%>
+<%- if @manhole_user -%>
+MANHOLE_USER = <%= @manhole_user %>
+<%- end -%>
+<%- if @manhole_public_key -%>
+MANHOLE_PUBLIC_KEY = <%= @manhole_public_key %>
+<%- end -%>

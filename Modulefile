@@ -1,0 +1,11 @@
+name          '3dna-graphite'
+version       '0.1.0'
+source        'https://github.com/3dna/puppet-graphite/'
+author        '3dna'
+license       'BSD-3'
+summary       'manages carbon daemons for a graphite installation'
+description   ''
+project_page  'https://github.com/3dna/puppet-graphite/'
+
+dependency 'puppetlabs/stdlib'
+dependency 'puppetlabs/concat'
