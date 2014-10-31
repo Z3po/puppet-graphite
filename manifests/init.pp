@@ -86,7 +86,6 @@ class graphite (
 
   Class['graphite::install'] -> Class['graphite::config']
 
-  include graphite::install
-  include graphite::config
-
+  contain graphite::install
+  contain graphite::config
 }

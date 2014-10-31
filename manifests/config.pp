@@ -11,7 +11,7 @@
 # Copyright 2014 3dna Corp
 #
 class graphite::config inherits graphite {
-  include graphite::cache_globals
+  contain graphite::cache_globals
 
   Concat {
     owner => $user,
