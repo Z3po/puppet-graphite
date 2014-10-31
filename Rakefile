@@ -36,7 +36,6 @@ end
 desc "Run syntax, lint, and spec tests."
 task :test => [
   :syntax,
-  ## no lint for now
-  #:lint,
+  :lint,
   :spec,
 ]

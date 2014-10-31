@@ -14,11 +14,11 @@ class graphite::config inherits graphite {
   contain graphite::cache_globals
 
   Concat {
-    owner => $user,
-    group => $group,
+    owner => $graphite::user,
+    group => $graphite::group,
     mode  => '0600',
     warn  => true,
   }
 
-  concat { [$carbon_conf, $storage_schemas_conf, $storage_aggregation_conf]: }
+  concat { [$graphite::carbon_conf, $graphite::storage_schemas_conf, $graphite::storage_aggregation_conf]: }
 }

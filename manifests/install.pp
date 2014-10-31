@@ -11,13 +11,13 @@
 # Copyright 2014 3dna Corp
 #
 class graphite::install inherits graphite {
-  package { $package:
+  package { $graphite::package:
     ensure => present,
   }
 
   file {
     ['/etc/init.d/carbon-cache', '/etc/default/graphite-carbon']:
       ensure  => absent,
-      require => Package[$package];
+      require => Package[$graphite::package];
   }
 }

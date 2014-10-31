@@ -9,7 +9,7 @@
 # Copyright 2014 3dna Corp
 #
 class graphite::params {
-  if ($operatingsystem == 'Ubuntu') {
+  if ($::operatingsystem == 'Ubuntu') {
     $package = 'graphite-carbon'
     $service = 'carbon-cache'
     $conf_dir = '/etc/carbon'
@@ -22,6 +22,6 @@ class graphite::params {
     $package_name = 'graphite-carbon'
     $cache_init_template = 'graphite/init/ubuntu-init.d.erb'
   } else {
-    fail("$operatingsystem not supported")
+    fail("${::operatingsystem} not supported")
   }
 }
