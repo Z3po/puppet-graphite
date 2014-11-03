@@ -14,7 +14,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Graphite backend daemon"
 NAME=carbon-cache-<%= @name %>
-DAEMON=/usr/bin/$NAME
+DAEMON=/usr/bin/carbon-cache
 PIDFILE=/var/run/$NAME.pid
 DAEMON_ARGS="--config=/etc/carbon/carbon.conf --pidfile=$PIDFILE --logdir=/var/log/carbon/ --instance=<%= @name %> start"
 SCRIPTNAME=/etc/init.d/$NAME
