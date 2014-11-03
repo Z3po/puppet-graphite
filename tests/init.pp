@@ -10,6 +10,7 @@
 # http://docs.puppetlabs.com/guides/tests_smoke.html
 #
 include graphite
+include graphite::relay
 
 graphite::cache { 'a': }
 graphite::storage_aggregation { 'production':

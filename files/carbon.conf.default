@@ -15,20 +15,20 @@
 # configuration variables are available with these default values:
 #
 
-STORAGE_DIR    = <%= @storage_dir %>
-CONF_DIR       = <%= @conf_dir %>
-LOG_DIR        = <%= @log_dir %>
-PID_DIR        = <%= @pid_dir %>
+STORAGE_DIR    = /var/lib/graphite/
+CONF_DIR       = /etc/carbon/
+LOG_DIR        = /var/log/carbon/
+PID_DIR        = /var/run/
 
-LOCAL_DATA_DIR = <%= @local_data_dir %>
+LOCAL_DATA_DIR = /var/lib/graphite/whisper/
 
 # Enable daily log rotation. If disabled, a kill -HUP can be used after a manual rotate
-ENABLE_LOGROTATION = <%= @enable_logrotation_bool ? 'True' : 'False' %>
+ENABLE_LOGROTATION = False
 
 # Specify the user to drop privileges to
 # If this is blank carbon runs as the user that invokes it
 # This user must have write access to the local data directory
-USER = <%= @user %>
+USER = _graphite
 #
 # NOTE: The above settings must be set under [relay] and [aggregator]
 #       to take effect for those daemons as well
@@ -36,24 +36,20 @@ USER = <%= @user %>
 # Limit the size of the cache to avoid swapping or becoming CPU bound.
 # Sorts and serving cache queries gets more expensive as the cache grows.
 # Use the value "inf" (infinity) for an unlimited cache size.
-MAX_CACHE_SIZE = <%= @max_cache_size %>
+MAX_CACHE_SIZE = inf
 
 # Limits the number of whisper update_many() calls per second, which effectively
 # means the number of write requests sent to the disk. This is intended to
 # prevent over-utilizing the disk and thus starving the rest of the system.
 # When the rate of required updates exceeds this, then carbon's caching will
 # take effect and increase the overall throughput accordingly.
-MAX_UPDATES_PER_SECOND = <%= @max_updates_per_second %>
+MAX_UPDATES_PER_SECOND = 500
 
 # If defined, this changes the MAX_UPDATES_PER_SECOND in Carbon when a
 # stop/shutdown is initiated.  This helps when MAX_UPDATES_PER_SECOND is
 # relatively low and carbon has cached a lot of updates; it enables the carbon
 # daemon to shutdown more quickly. 
-<%- if @max_updates_per_second_on_shutdown.nil? -%>
 # MAX_UPDATES_PER_SECOND_ON_SHUTDOWN = 1000
-<%- else -%>
-MAX_UPDATES_PER_SECOND_ON_SHUTDOWN = <%= @max_updates_per_second_on_shutdown %>
-<%- end -%>
 
 # Softly limits the number of whisper files that get created each minute.
 # Setting this value low (like at 50) is a good way to ensure your graphite
@@ -62,43 +58,43 @@ MAX_UPDATES_PER_SECOND_ON_SHUTDOWN = <%= @max_updates_per_second_on_shutdown %>
 # database files to all get created and thus longer until the data becomes usable.
 # Setting this value high (like "inf" for infinity) will cause graphite to create
 # the files quickly but at the risk of slowing I/O down considerably for a while.
-MAX_CREATES_PER_MINUTE = <%= @max_creates_per_minute %>
+MAX_CREATES_PER_MINUTE = 50
 
-LINE_RECEIVER_INTERFACE = <%= @line_receiver_interface %>
-LINE_RECEIVER_PORT = <%= @line_receiver_port %>
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = 2003
 
 # Set this to True to enable the UDP listener. By default this is off
 # because it is very common to run multiple carbon daemons and managing
 # another (rarely used) port for every carbon instance is not fun.
-ENABLE_UDP_LISTENER = <%= @enable_udp_listener_bool ? 'True' : 'False' %>
-UDP_RECEIVER_INTERFACE = <%= @udp_receiver_interface %>
-UDP_RECEIVER_PORT = <%= @udp_receiver_port %>
+ENABLE_UDP_LISTENER = False
+UDP_RECEIVER_INTERFACE = 0.0.0.0
+UDP_RECEIVER_PORT = 2003
 
-PICKLE_RECEIVER_INTERFACE = <%= @pickle_receiver_interface %>
-PICKLE_RECEIVER_PORT = <%= @pickle_receiver_port %>
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = 2004
 
 # Set to false to disable logging of successful connections
-LOG_LISTENER_CONNECTIONS = <%= @log_listener_connections_bool ? 'True' : 'False' %>
+LOG_LISTENER_CONNECTIONS = True
 
 # Per security concerns outlined in Bug #817247 the pickle receiver
 # will use a more secure and slightly less efficient unpickler.
 # Set this to True to revert to the old-fashioned insecure unpickler.
-USE_INSECURE_UNPICKLER = <%= @log_listener_connections_bool ? 'True' : 'False' %>
+USE_INSECURE_UNPICKLER = False
 
-CACHE_QUERY_INTERFACE = <%= @cache_query_interface %>
-CACHE_QUERY_PORT = <%= @cache_query_port %>
+CACHE_QUERY_INTERFACE = 0.0.0.0
+CACHE_QUERY_PORT = 7002
 
 # Set this to False to drop datapoints received after the cache
 # reaches MAX_CACHE_SIZE. If this is True (the default) then sockets
 # over which metrics are received will temporarily stop accepting
 # data until the cache size falls below 95% MAX_CACHE_SIZE.
-USE_FLOW_CONTROL = <%= @use_flow_control_bool ? 'True' : 'False' %>
+USE_FLOW_CONTROL = True
 
 # By default, carbon-cache will log every whisper update and cache hit. This can be excessive and
 # degrade performance if logging on the same volume as the whisper data is stored.
-LOG_UPDATES = <%= @log_updates_bool ? 'True' : 'False' %>
-LOG_CACHE_HITS = <%= @log_cache_hits_bool ? 'True' : 'False' %>
-LOG_CACHE_QUEUE_SORTS = <%= @log_cache_queue_sorts_bool ? 'True' : 'False' %>
+LOG_UPDATES = False
+LOG_CACHE_HITS = False
+LOG_CACHE_QUEUE_SORTS = True
 
 # The thread that writes metrics to disk can use on of the following strategies
 # determining the order in which metrics are removed from cache and flushed to
@@ -123,12 +119,12 @@ LOG_CACHE_QUEUE_SORTS = <%= @log_cache_queue_sorts_bool ? 'True' : 'False' %>
 # the OS's i/o scheduler is expected to compensate for the random write
 # pattern.
 #
-CACHE_WRITE_STRATEGY = <%= @cache_write_strategy %>
+CACHE_WRITE_STRATEGY = sorted
 
 # On some systems it is desirable for whisper to write synchronously.
 # Set this option to True if you'd like to try this. Basically it will
 # shift the onus of buffering writes from the kernel into carbon's cache.
-WHISPER_AUTOFLUSH = <%= @whisper_autoflush_bool ? 'True' : 'False' %>
+WHISPER_AUTOFLUSH = False
 
 # By default new Whisper files are created pre-allocated with the data region
 # filled with zeros to prevent fragmentation and speed up contiguous reads and
@@ -136,7 +132,7 @@ WHISPER_AUTOFLUSH = <%= @whisper_autoflush_bool ? 'True' : 'False' %>
 # the file sparsely instead. Enabling this option may allow a large increase of
 # MAX_CREATES_PER_MINUTE but may have longer term performance implications
 # depending on the underlying storage configuration.
-WHISPER_SPARSE_CREATE = <%= @whisper_sparse_create_bool ? 'True' : 'False' %>
+# WHISPER_SPARSE_CREATE = False
 
 # Only beneficial on linux filesystems that support the fallocate system call.
 # It maintains the benefits of contiguous reads/writes, but with a potentially
@@ -144,38 +140,51 @@ WHISPER_SPARSE_CREATE = <%= @whisper_sparse_create_bool ? 'True' : 'False' %>
 # allocation and zero-ing. Enabling this option may allow a large increase of
 # MAX_CREATES_PER_MINUTE. If enabled on an OS or filesystem that is unsupported
 # this option will gracefully fallback to standard POSIX file access methods.
-WHISPER_FALLOCATE_CREATE = <%= @whisper_fallocate_create_bool ? 'True' : 'False' %>
+WHISPER_FALLOCATE_CREATE = True
 
 # Enabling this option will cause Whisper to lock each Whisper file it writes
 # to with an exclusive lock (LOCK_EX, see: man 2 flock). This is useful when
 # multiple carbon-cache daemons are writing to the same files
-WHISPER_LOCK_WRITES = <%= @whisper_lock_writes_bool ? 'True' : 'False' %>
+# WHISPER_LOCK_WRITES = False
 
 # Set this to True to enable whitelisting and blacklisting of metrics in
 # CONF_DIR/whitelist and CONF_DIR/blacklist. If the whitelist is missing or
 # empty, all metrics will pass through
-USE_WHITELIST = <%= @use_whitelist_bool ? 'True' : 'False' %>
+# USE_WHITELIST = False
 
 # By default, carbon itself will log statistics (such as a count,
 # metricsReceived) with the top level prefix of 'carbon' at an interval of 60
 # seconds. Set CARBON_METRIC_INTERVAL to 0 to disable instrumentation
-CARBON_METRIC_PREFIX = <%= @carbon_metric_prefix %>
-CARBON_METRIC_INTERVAL = <%= @carbon_metric_interval %>
+# CARBON_METRIC_PREFIX = carbon
+# CARBON_METRIC_INTERVAL = 60
 
 # Enable AMQP if you want to receve metrics using an amqp broker
-ENABLE_AMQP = <%= @enable_amqp_bool ? 'True' : 'False' %>
+# ENABLE_AMQP = False
 
 # Verbose means a line will be logged for every metric received
 # useful for testing
-AMQP_VERBOSE = <%= @amqp_verbose_bool ? 'True' : 'False' %>
+# AMQP_VERBOSE = False
 
-AMQP_HOST = <%= @amqp_host %>
-AMQP_PORT = <%= @amqp_port %>
-AMQP_VHOST = <%= @amqp_vhost %>
-AMQP_USER = <%= @amqp_user %>
-AMQP_PASSWORD = <%= @amqp_password %>
-AMQP_EXCHANGE = <%= @amqp_exchange %>
-AMQP_METRIC_NAME_IN_BODY = <%= @amqp_metric_name_in_body_bool ? 'True' : 'False' %>
+# AMQP_HOST = localhost
+# AMQP_PORT = 5672
+# AMQP_VHOST = /
+# AMQP_USER = guest
+# AMQP_PASSWORD = guest
+# AMQP_EXCHANGE = graphite
+# AMQP_METRIC_NAME_IN_BODY = False
+
+# The manhole interface allows you to SSH into the carbon daemon
+# and get a python interpreter. BE CAREFUL WITH THIS! If you do
+# something like time.sleep() in the interpreter, the whole process
+# will sleep! This is *extremely* helpful in debugging, assuming
+# you are familiar with the code. If you are not, please don't
+# mess with this, you are asking for trouble :)
+#
+# ENABLE_MANHOLE = False
+# MANHOLE_INTERFACE = 127.0.0.1
+# MANHOLE_PORT = 7222
+# MANHOLE_USER = admin
+# MANHOLE_PUBLIC_KEY = ssh-rsa AAAAB3NzaC1yc2EAAAABiwAaAIEAoxN0sv/e4eZCPpi3N3KYvyzRaBaMeS2RsOQ/cDuKv11dlNzVeiyc3RFmCv5Rjwn/lQ79y0zyHxw67qLyhQ/kDzINc4cY41ivuQXm2tPmgvexdrBv5nsfEpjs3gLZfJnyvlcVyWK/lId8WUvEWSWHTzsbtmXAF2raJMdgLTbQ8wE=
 
 # Patterns for all of the metrics this machine will store. Read more at
 # http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol#Bindings
@@ -185,22 +194,6 @@ AMQP_METRIC_NAME_IN_BODY = <%= @amqp_metric_name_in_body_bool ? 'True' : 'False'
 #
 # Example: store everything
 # BIND_PATTERNS = #
-<%- if !@bind_patterns.nil? -%>
-BIND_PATTERNS = <%= Array(@bind_patterns).join(', ') %>
-<%- end -%>
-
-# The manhole interface allows you to SSH into the carbon daemon
-# and get a python interpreter. BE CAREFUL WITH THIS! If you do
-# something like time.sleep() in the interpreter, the whole process
-# will sleep! This is *extremely* helpful in debugging, assuming
-# you are familiar with the code. If you are not, please don't
-# mess with this, you are asking for trouble :)
-#
-ENABLE_MANHOLE = <%= @enable_manhole_bool ? 'True' : 'False' %>
-MANHOLE_INTERFACE = <%= @manhole_interface %>
-MANHOLE_PORT = <%= @manhole_port %>
-MANHOLE_USER = <%= @manhole_user %>
-MANHOLE_PUBLIC_KEY = <%= @manhole_public_key %>
 
 # To configure special settings for the carbon-cache instance 'b', uncomment this:
 #[cache:b]
@@ -214,13 +207,13 @@ MANHOLE_PUBLIC_KEY = <%= @manhole_public_key %>
 
 
 [relay]
-LINE_RECEIVER_INTERFACE = <%= @relay_line_receiver_interface %>
-LINE_RECEIVER_PORT = <%= @relay_line_receiver_port %>
-PICKLE_RECEIVER_INTERFACE = <%= @relay_pickle_receiver_interface %>
-PICKLE_RECEIVER_PORT = <%= @relay_pickle_receiver_port %>
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = 2013
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = 2014
 
 # Set to false to disable logging of successful connections
-LOG_LISTENER_CONNECTIONS = <%= @relay_log_listener_connections_bool ? 'True' : 'False' %>
+LOG_LISTENER_CONNECTIONS = True
 
 # Carbon-relay has several options for metric routing controlled by RELAY_METHOD
 #
@@ -236,11 +229,11 @@ LOG_LISTENER_CONNECTIONS = <%= @relay_log_listener_connections_bool ? 'True' : '
 # instance.
 # Enable this for carbon-relays that send to a group of carbon-aggregators
 #RELAY_METHOD = aggregated-consistent-hashing
-RELAY_METHOD = <%= @relay_method %>
+RELAY_METHOD = rules
 
 # If you use consistent-hashing you can add redundancy by replicating every
 # datapoint to more than one machine.
-REPLICATION_FACTOR = <%= @replication_factor %>
+REPLICATION_FACTOR = 1
 
 # This is a list of carbon daemons we will send any relayed or
 # generated metrics to. The default provided would send to a single
@@ -258,45 +251,45 @@ REPLICATION_FACTOR = <%= @replication_factor %>
 #
 # If using RELAY_METHOD = rules, all destinations used in relay-rules.conf
 # must be defined in this list
-DESTINATIONS = <%= @destinations %>
+DESTINATIONS = 127.0.0.1:2004
 
 # This defines the maximum "message size" between carbon daemons.
 # You shouldn't need to tune this unless you really know what you're doing.
-MAX_DATAPOINTS_PER_MESSAGE = <%= @max_datapoints_per_message %>
-MAX_QUEUE_SIZE = <%= @max_queue_size %>
+MAX_DATAPOINTS_PER_MESSAGE = 500
+MAX_QUEUE_SIZE = 10000
 
 # Set this to False to drop datapoints when any send queue (sending datapoints
 # to a downstream carbon daemon) hits MAX_QUEUE_SIZE. If this is True (the
 # default) then sockets over which metrics are received will temporarily stop accepting
 # data until the send queues fall below 80% MAX_QUEUE_SIZE.
-USE_FLOW_CONTROL = <%= @relay_use_flow_control_bool ? 'True' : 'False' %>
+USE_FLOW_CONTROL = True
 
 # Set this to True to enable whitelisting and blacklisting of metrics in
 # CONF_DIR/whitelist and CONF_DIR/blacklist. If the whitelist is missing or
 # empty, all metrics will pass through
-USE_WHITELIST = <%= @relay_use_whitelist_bool ? 'True' : 'False' %>
+# USE_WHITELIST = False
 
 # By default, carbon itself will log statistics (such as a count,
 # metricsReceived) with the top level prefix of 'carbon' at an interval of 60
 # seconds. Set CARBON_METRIC_INTERVAL to 0 to disable instrumentation
-CARBON_METRIC_PREFIX = <%= @relay_carbon_metric_prefix %>
-CARBON_METRIC_INTERVAL = <%= @relay_carbon_metric_interval %>
+# CARBON_METRIC_PREFIX = carbon
+# CARBON_METRIC_INTERVAL = 60
 
 
 [aggregator]
-LINE_RECEIVER_INTERFACE = <%= @aggregator_line_receiver_interface %>
-LINE_RECEIVER_PORT = <%= @aggregator_line_receiver_port %>
+LINE_RECEIVER_INTERFACE = 0.0.0.0
+LINE_RECEIVER_PORT = 2023
 
-PICKLE_RECEIVER_INTERFACE = <%= @aggregator_pickle_receiver_interface %>
-PICKLE_RECEIVER_PORT = <%= @aggregator_pickle_receiver_port %>
+PICKLE_RECEIVER_INTERFACE = 0.0.0.0
+PICKLE_RECEIVER_PORT = 2024
 
 # Set to false to disable logging of successful connections
-LOG_LISTENER_CONNECTIONS = <%= @aggregator_log_listener_connections_bool ? 'True' : 'False' %>
+LOG_LISTENER_CONNECTIONS = True
 
 # If set true, metric received will be forwarded to DESTINATIONS in addition to
 # the output of the aggregation rules. If set false the carbon-aggregator will
 # only ever send the output of aggregation.
-FORWARD_ALL = <%= @forward_all_bool ? 'True' : 'False' %>
+FORWARD_ALL = True
 
 # This is a list of carbon daemons we will send any relayed or
 # generated metrics to. The default provided would send to a single
@@ -311,32 +304,32 @@ FORWARD_ALL = <%= @forward_all_bool ? 'True' : 'False' %>
 # Note that if the destinations are all carbon-caches then this should
 # exactly match the webapp's CARBONLINK_HOSTS setting in terms of
 # instances listed (order matters!).
-DESTINATIONS = <%= @aggregator_destinations %>
+DESTINATIONS = 127.0.0.1:2004
 
 # If you want to add redundancy to your data by replicating every
 # datapoint to more than one machine, increase this.
-REPLICATION_FACTOR = <%= @aggregator_replication_factor %>
+REPLICATION_FACTOR = 1
 
 # This is the maximum number of datapoints that can be queued up
 # for a single destination. Once this limit is hit, we will
 # stop accepting new data if USE_FLOW_CONTROL is True, otherwise
 # we will drop any subsequently received datapoints.
-MAX_QUEUE_SIZE = <%= @aggregator_max_queue_size %>
+MAX_QUEUE_SIZE = 10000
 
 # Set this to False to drop datapoints when any send queue (sending datapoints
 # to a downstream carbon daemon) hits MAX_QUEUE_SIZE. If this is True (the
 # default) then sockets over which metrics are received will temporarily stop accepting
 # data until the send queues fall below 80% MAX_QUEUE_SIZE.
-USE_FLOW_CONTROL = <%= @aggregator_use_flow_control_bool ? 'True' : 'False' %>
+USE_FLOW_CONTROL = True
 
 # This defines the maximum "message size" between carbon daemons.
 # You shouldn't need to tune this unless you really know what you're doing.
-MAX_DATAPOINTS_PER_MESSAGE = <%= @aggregator_max_datapoints_per_message %>
+MAX_DATAPOINTS_PER_MESSAGE = 500
 
 # This defines how many datapoints the aggregator remembers for
 # each metric. Aggregation only happens for datapoints that fall in
 # the past MAX_AGGREGATION_INTERVALS * intervalSize seconds.
-MAX_AGGREGATION_INTERVALS = <%= @max_aggregation_intervals %>
+MAX_AGGREGATION_INTERVALS = 5
 
 # By default (WRITE_BACK_FREQUENCY = 0), carbon-aggregator will write back
 # aggregated data points once every rule.frequency seconds, on a per-rule basis.
@@ -344,15 +337,15 @@ MAX_AGGREGATION_INTERVALS = <%= @max_aggregation_intervals %>
 # every N seconds, independent of rule frequency. This is useful, for example,
 # to be able to query partially aggregated metrics from carbon-cache without
 # having to first wait rule.frequency seconds.
-WRITE_BACK_FREQUENCY = <%= @write_back_frequency %>
+# WRITE_BACK_FREQUENCY = 0
 
 # Set this to True to enable whitelisting and blacklisting of metrics in
 # CONF_DIR/whitelist and CONF_DIR/blacklist. If the whitelist is missing or
 # empty, all metrics will pass through
-USE_WHITELIST = <%= @aggregator_use_whitelist_bool ? 'True' : 'False' %>
+# USE_WHITELIST = False
 
 # By default, carbon itself will log statistics (such as a count,
 # metricsReceived) with the top level prefix of 'carbon' at an interval of 60
 # seconds. Set CARBON_METRIC_INTERVAL to 0 to disable instrumentation
-CARBON_METRIC_PREFIX = <%= @aggregator_carbon_metric_prefix %>
-CARBON_METRIC_INTERVAL = <%= @aggregator_carbon_metric_interval %>
+# CARBON_METRIC_PREFIX = carbon
+# CARBON_METRIC_INTERVAL = 60
