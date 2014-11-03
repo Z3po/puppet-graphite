@@ -11,6 +11,7 @@
 #
 include graphite
 include graphite::relay
+include graphite::aggregator
 
 graphite::cache { 'a': }
 graphite::storage_aggregation { 'production':
