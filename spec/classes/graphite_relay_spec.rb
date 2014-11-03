@@ -22,6 +22,7 @@ describe 'graphite::relay' do
       :order => '02_relay',
     ) }
 
+    it { should contain_concat__fragment('carbon_relay').with_content(/\[relay\]/) }
     it { should contain_concat__fragment('carbon_relay').with_content(/LINE_RECEIVER_INTERFACE = 0\.0\.0\.0/) }
     it { should contain_concat__fragment('carbon_relay').with_content(/LINE_RECEIVER_PORT = 2013/) }
     it { should contain_concat__fragment('carbon_relay').with_content(/PICKLE_RECEIVER_INTERFACE = 0\.0\.0\.0/) }
