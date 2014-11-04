@@ -46,4 +46,5 @@ class graphite::aggregator (
 
   Concat::Fragment['carbon_aggregator'] ~> Service['carbon-aggregator']
   File['/etc/init.d/carbon-aggregator'] ~> Service['carbon-aggregator']
+  Concat[$graphite::aggregation_rules_conf] ~> Service['carbon-aggregator']
 }

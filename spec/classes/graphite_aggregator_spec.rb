@@ -52,6 +52,8 @@ describe 'graphite::aggregator' do
     it { should contain_concat__fragment('carbon_aggregator').that_notifies('Service[carbon-aggregator]') }
     it { should contain_file('/etc/init.d/carbon-aggregator').that_notifies('Service[carbon-aggregator]') }
 
+    it { should contain_concat('/etc/carbon/aggregation-rules.conf').that_notifies('Service[carbon-aggregator]') }
+
   end
 
   context 'all parameters set' do
