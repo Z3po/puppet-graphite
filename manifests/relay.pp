@@ -40,4 +40,5 @@ class graphite::relay (
 
   Concat::Fragment['carbon_relay'] ~> Service['carbon-relay']
   File['/etc/init.d/carbon-relay'] ~> Service['carbon-relay']
+  Concat[$graphite::relay_rules_conf] ~> Service['carbon-relay']
 }
