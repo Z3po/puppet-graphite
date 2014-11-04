@@ -18,9 +18,10 @@ class graphite::config inherits graphite {
     group => $graphite::group,
     mode  => '0600',
     warn  => true,
+    force => true,
   }
 
-  concat { 
+  concat {
     [
       $graphite::carbon_conf,
       $graphite::storage_schemas_conf,
@@ -31,4 +32,5 @@ class graphite::config inherits graphite {
       $graphite::blacklist_conf,
     ]:
   }
+
 }
