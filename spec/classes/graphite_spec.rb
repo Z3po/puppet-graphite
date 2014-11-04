@@ -28,13 +28,37 @@ describe 'graphite' do
           :mode  => '0600',
           :warn  => true,
         )}
-        it { should contain_concat('/etc/carbon/storage_schemas.conf').with(
+        it { should contain_concat('/etc/carbon/storage-schemas.conf').with(
           :owner => '_graphite',
           :group => '_graphite',
           :mode  => '0600',
           :warn  => true,
         )}
-        it { should contain_concat('/etc/carbon/storage_aggregation.conf').with(
+        it { should contain_concat('/etc/carbon/storage-aggregation.conf').with(
+          :owner => '_graphite',
+          :group => '_graphite',
+          :mode  => '0600',
+          :warn  => true,
+        )}
+        it { should contain_concat('/etc/carbon/relay-rules.conf').with(
+          :owner => '_graphite',
+          :group => '_graphite',
+          :mode  => '0600',
+          :warn  => true,
+        )}
+        it { should contain_concat('/etc/carbon/aggregation-rules.conf').with(
+          :owner => '_graphite',
+          :group => '_graphite',
+          :mode  => '0600',
+          :warn  => true,
+        )}
+        it { should contain_concat('/etc/carbon/blacklist.conf').with(
+          :owner => '_graphite',
+          :group => '_graphite',
+          :mode  => '0600',
+          :warn  => true,
+        )}
+        it { should contain_concat('/etc/carbon/whitelist.conf').with(
           :owner => '_graphite',
           :group => '_graphite',
           :mode  => '0600',

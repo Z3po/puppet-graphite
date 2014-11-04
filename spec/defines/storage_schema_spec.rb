@@ -15,7 +15,7 @@ describe 'graphite::storage_schema', :type => 'define' do
     }}
 
     it { should contain_concat__fragment('storage_schema_staging').with(
-      :target => '/etc/carbon/storage_schemas.conf',
+      :target => '/etc/carbon/storage-schemas.conf',
       :order  => 100,
     )}
 
@@ -32,7 +32,7 @@ describe 'graphite::storage_schema', :type => 'define' do
     }}
 
     it { should contain_concat__fragment('storage_schema_staging').with(
-      :target => '/etc/carbon/storage_schemas.conf',
+      :target => '/etc/carbon/storage-schemas.conf',
       :order  => 42,
     )}
   end
@@ -44,7 +44,7 @@ describe 'graphite::storage_schema', :type => 'define' do
     }}
 
     it { should contain_concat__fragment('storage_schema_staging').with(
-      :target => '/etc/carbon/storage_schemas.conf',
+      :target => '/etc/carbon/storage-schemas.conf',
       :order  => 100,
     )}
 

@@ -14,7 +14,7 @@ describe 'graphite::storage_aggregation', :type => 'define' do
     }}
 
     it { should contain_concat__fragment('storage_aggregation_production').with(
-      :target => '/etc/carbon/storage_aggregation.conf',
+      :target => '/etc/carbon/storage-aggregation.conf',
       :order   => 100,
     )}
 
@@ -33,7 +33,7 @@ describe 'graphite::storage_aggregation', :type => 'define' do
     }}
 
     it { should contain_concat__fragment('storage_aggregation_production').with(
-      :target => '/etc/carbon/storage_aggregation.conf',
+      :target => '/etc/carbon/storage-aggregation.conf',
       :order   => 42,
     )}
 

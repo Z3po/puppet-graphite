@@ -20,5 +20,15 @@ class graphite::config inherits graphite {
     warn  => true,
   }
 
-  concat { [$graphite::carbon_conf, $graphite::storage_schemas_conf, $graphite::storage_aggregation_conf]: }
+  concat { 
+    [
+      $graphite::carbon_conf,
+      $graphite::storage_schemas_conf,
+      $graphite::storage_aggregation_conf,
+      $graphite::relay_rules_conf,
+      $graphite::aggregation_rules_conf,
+      $graphite::whitelist_conf,
+      $graphite::blacklist_conf,
+    ]:
+  }
 }
