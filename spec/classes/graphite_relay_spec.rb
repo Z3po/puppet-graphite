@@ -52,6 +52,7 @@ describe 'graphite::relay' do
     it { should contain_concat__fragment('carbon_relay').that_notifies('Service[carbon-relay]') }
     it { should contain_file('/etc/init.d/carbon-relay').that_notifies('Service[carbon-relay]') }
     it { should contain_concat('/etc/carbon/relay-rules.conf').that_notifies('Service[carbon-relay]') }
+    it { should contain_concat('/etc/carbon/carbon.conf').that_comes_before('Service[carbon-relay]') }
 
   end
   

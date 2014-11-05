@@ -84,8 +84,9 @@ define graphite::cache (
   }
 
   service { "carbon-cache-${name}":
-    ensure => running,
-    enable => true,
+    ensure  => running,
+    enable  => true,
+    require => Concat[$graphite::carbon_conf],
   }
 
   Class['graphite::cache_globals'] ~> Service["carbon-cache-${name}"]

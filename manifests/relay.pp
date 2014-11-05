@@ -34,8 +34,9 @@ class graphite::relay (
   }
 
   service {  'carbon-relay':
-    ensure => running,
-    enable => true,
+    ensure  => running,
+    enable  => true,
+    require => Concat[$graphite::carbon_conf];
   }
 
   Concat::Fragment['carbon_relay'] ~> Service['carbon-relay']

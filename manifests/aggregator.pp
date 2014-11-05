@@ -40,8 +40,9 @@ class graphite::aggregator (
 
   service {
     'carbon-aggregator':
-      ensure => running,
-      enable => true;
+      ensure  => running,
+      enable  => true,
+      require => Concat[$graphite::carbon_conf];
   }
 
   Concat::Fragment['carbon_aggregator'] ~> Service['carbon-aggregator']

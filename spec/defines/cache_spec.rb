@@ -129,6 +129,7 @@ describe 'graphite::cache', :type => 'define' do
     it { should contain_file('/etc/init.d/carbon-cache-a').with_content(%r{\nNAME=carbon-cache-a}) }
     it { should contain_file('/etc/init.d/carbon-cache-a').that_notifies('Service[carbon-cache-a]') }
     it { should contain_class('graphite::cache_globals').that_notifies('Service[carbon-cache-a]') }
+    it { should contain_concat('/etc/carbon/carbon.conf').that_comes_before('Service[carbon-cache-a]') }
 
     it { should contain_service('carbon-cache-a').with(
       :enable => true,
