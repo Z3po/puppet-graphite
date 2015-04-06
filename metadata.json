@@ -1,5 +1,5 @@
 {
-  "name": "graphite",
+  "name": "nationbuilder/graphite",
   "version": "0.1.0",
   "author": "nationbuilder",
   "summary": "manages carbon daemons for a graphite installation",
