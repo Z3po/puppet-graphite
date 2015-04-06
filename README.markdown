@@ -57,6 +57,7 @@ If you want to have an aggregator running in front of your cache(s), use the `gr
 class { 'graphite::aggregator':
     destinations => ['127.0.0.1:2014:a'],
 }
+```
 
 Other Defines
 -------------
