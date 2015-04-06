@@ -1,12 +1,12 @@
 {
-  "name": "3dna-graphite",
+  "name": "graphite",
   "version": "0.1.0",
-  "author": "3dna",
+  "author": "nationbuilder",
   "summary": "manages carbon daemons for a graphite installation",
   "license": "BSD",
-  "source": "https://github.com/3dna/puppet-graphite/",
-  "project_page": "https://github.com/3dna/puppet-graphite/",
-  "issues_url": "https://github.com/3dna/puppet-graphite/issues",
+  "source": "https://github.com/nationbuilder/puppet-graphite/",
+  "project_page": "https://github.com/nationbuilder/puppet-graphite/",
+  "issues_url": "https://github.com/nationbuilder/puppet-graphite/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
