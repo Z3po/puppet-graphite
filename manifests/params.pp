@@ -9,7 +9,7 @@
 # Copyright 2014 3dna Corp
 #
 class graphite::params {
-  if ($::operatingsystem == 'Ubuntu') {
+  if ($::operatingsystem =~ /Ubuntu|Debian/) {
     $package = 'graphite-carbon'
     $service = 'carbon-cache'
     $conf_dir = '/etc/carbon'
@@ -19,7 +19,6 @@ class graphite::params {
     $local_data_dir = '/var/lib/graphite/whisper'
     $user = '_graphite'
     $group = '_graphite'
-    $package_name = 'graphite-carbon'
     $cache_init_template = 'graphite/init/ubuntu-init.d.erb'
   } else {
     fail("${::operatingsystem} not supported")

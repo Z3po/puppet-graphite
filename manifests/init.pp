@@ -11,7 +11,7 @@
 # Copyright 2014 3dna Corp
 #
 class graphite (
-  $package_name                       = $graphite::params::package_name,
+  $package                            = $graphite::params::package,
   $cache_init_template                = $graphite::params::cache_init_template,
   $conf_dir                           = $graphite::params::conf_dir,
   $carbon_conf                        = "${conf_dir}/carbon.conf",
@@ -70,26 +70,26 @@ class graphite (
   # these have to be up here because order doesn't matter with puppet
   # except when it does.
   # :(
-  $enable_logrotation_bool = str2bool($enable_logrotation)
-  $enable_udp_listener_bool = str2bool($enable_udp_listener)
-  $log_listener_connections_bool = str2bool($log_listener_connections)
-  $use_insecure_unpickler_bool = str2bool($use_insecure_unpickler)
-  $use_flow_control_bool = str2bool($use_flow_control)
-  $log_updates_bool = str2bool($log_updates)
-  $log_cache_hits_bool = str2bool($log_cache_hits)
-  $log_cache_queue_sorts_bool = str2bool($log_cache_queue_sorts)
-  $whisper_autoflush_bool = str2bool($whisper_autoflush)
-  $whisper_sparse_create_bool = str2bool($whisper_sparse_create)
-  $whisper_fallocate_create_bool = str2bool($whisper_fallocate_create)
-  $whisper_lock_writes_bool = str2bool($whisper_lock_writes)
-  $use_whitelist_bool = str2bool($use_whitelist)
-  $enable_amqp_bool = str2bool($enable_amqp)
-  $amqp_verbose_bool = str2bool($amqp_verbose)
-  $amqp_metric_name_in_body_bool = str2bool($amqp_metric_name_in_body)
-  $enable_manhole_bool = str2bool($enable_manhole)
+  $enable_logrotation_bool = str2bool("$enable_logrotation")
+  $enable_udp_listener_bool = str2bool("$enable_udp_listener")
+  $log_listener_connections_bool = str2bool("$log_listener_connections")
+  $use_insecure_unpickler_bool = str2bool("$use_insecure_unpickler")
+  $use_flow_control_bool = str2bool("$use_flow_control")
+  $log_updates_bool = str2bool("$log_updates")
+  $log_cache_hits_bool = str2bool("$log_cache_hits")
+  $log_cache_queue_sorts_bool = str2bool("$log_cache_queue_sorts")
+  $whisper_autoflush_bool = str2bool("$whisper_autoflush")
+  $whisper_sparse_create_bool = str2bool("$whisper_sparse_create")
+  $whisper_fallocate_create_bool = str2bool("$whisper_fallocate_create")
+  $whisper_lock_writes_bool = str2bool("$whisper_lock_writes")
+  $use_whitelist_bool = str2bool("$use_whitelist")
+  $enable_amqp_bool = str2bool("$enable_amqp")
+  $amqp_verbose_bool = str2bool("$amqp_verbose")
+  $amqp_metric_name_in_body_bool = str2bool("$amqp_metric_name_in_body")
+  $enable_manhole_bool = str2bool("$enable_manhole")
 
   Class['graphite::install'] -> Class['graphite::config']
 
-  contain graphite::install
-  contain graphite::config
+  include graphite::install
+  include graphite::config
 }
